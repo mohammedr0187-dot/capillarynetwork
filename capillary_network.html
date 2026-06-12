@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Capillary Network — Mobile Phlebotomy Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #C8102E;
+    --red-dark: #9B0B22;
+    --red-light: #FDEAEA;
+    --red-mid: #E63950;
+    --charcoal: #1A1A1A;
+    --charcoal-2: #2E2E2E;
+    --gray-1: #F7F7F7;
+    --gray-2: #EFEFEF;
+    --gray-3: #D4D4D4;
+    --gray-4: #9A9A9A;
+    --white: #FFFFFF;
+    --font: 'Inter', sans-serif;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 1px 4px rgba(0,0,0,0.07);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.10);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); color: var(--charcoal); background: var(--white); line-height: 1.6; font-size: 16px; }
+
+  /* TOP BAR */
+  .top-bar { background: var(--charcoal); padding: 8px 5%; display: flex; align-items: center; justify-content: flex-end; gap: 28px; }
+  .top-bar a { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; color: #CCC; text-decoration: none; transition: color 0.15s; }
+  .top-bar a:hover { color: var(--white); }
+  .top-bar a svg { flex-shrink: 0; }
+  .top-bar-divider { width: 1px; height: 14px; background: #444; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--gray-2); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--charcoal); }
+  .nav-logo-mark { width: 34px; height: 34px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; }
+  .nav-logo-mark svg { width: 18px; height: 18px; }
+  .nav-logo-text { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+  .nav-logo-text span { color: var(--red); }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--charcoal-2); text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--red); }
+  .nav-cta { background: var(--red) !important; color: var(--white) !important; padding: 9px 20px; border-radius: var(--radius-sm); font-weight: 600 !important; }
+  .nav-cta:hover { background: var(--red-dark) !important; }
+
+  /* HERO */
+  .hero-wrap { max-width: 1200px; margin: 0 auto; }
+  .hero { padding: 90px 5% 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); background: var(--red-light); padding: 6px 14px; border-radius: 20px; margin-bottom: 22px; }
+  .hero-eyebrow::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--red); flex-shrink: 0; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.85); } }
+  .hero h1 { font-size: clamp(34px, 4vw, 54px); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; color: var(--charcoal); margin-bottom: 20px; }
+  .hero h1 em { font-style: normal; color: var(--red); }
+  .hero-sub { font-size: 18px; font-weight: 400; color: #555; line-height: 1.65; margin-bottom: 36px; max-width: 480px; }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary { background: var(--red); color: var(--white); font-size: 15px; font-weight: 600; padding: 14px 28px; border-radius: var(--radius-sm); text-decoration: none; transition: background 0.15s, transform 0.1s; display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer; font-family: var(--font); }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-secondary { background: transparent; color: var(--charcoal); font-size: 15px; font-weight: 600; padding: 14px 28px; border-radius: var(--radius-sm); text-decoration: none; border: 1.5px solid var(--gray-3); transition: border-color 0.15s, color 0.15s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-secondary:hover { border-color: var(--red); color: var(--red); }
+  .hero-visual { display: flex; flex-direction: column; gap: 14px; }
+  .hero-card { background: var(--white); border: 1px solid var(--gray-2); border-radius: var(--radius-lg); padding: 22px 24px; box-shadow: var(--shadow-md); }
+  .hero-card-label { font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--gray-4); margin-bottom: 10px; }
+  .hero-stat-row { display: flex; gap: 14px; align-items: stretch; }
+  .hero-stat { flex: 1; padding: 16px 10px; background: var(--gray-1); border-radius: var(--radius-md); text-align: center; }
+  .hero-stat .num { font-size: 26px; font-weight: 800; color: var(--red); letter-spacing: -1px; display: block; }
+  .hero-stat .lbl { font-size: 11px; color: var(--gray-4); font-weight: 500; margin-top: 2px; display: block; }
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 20px; display: inline-flex; align-items: center; gap: 5px; }
+  .badge-red { background: var(--red-light); color: var(--red-dark); }
+  .badge-gray { background: var(--gray-2); color: var(--charcoal-2); }
+
+  /* TRUST BAR */
+  .trust-bar { background: var(--charcoal); padding: 22px 5%; display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; }
+  .trust-item { display: flex; align-items: center; gap: 10px; color: #CCC; font-size: 13px; font-weight: 500; }
+  .trust-icon { width: 32px; height: 32px; border-radius: 50%; background: rgba(200,16,46,0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .trust-icon svg { width: 16px; height: 16px; }
+
+  /* SECTIONS */
+  section { padding: 80px 5%; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
+  .section-title { font-size: clamp(28px, 3vw, 40px); font-weight: 800; letter-spacing: -1px; line-height: 1.15; margin-bottom: 16px; color: var(--charcoal); }
+  .section-sub { font-size: 17px; color: #666; max-width: 580px; line-height: 1.65; margin-bottom: 48px; }
+
+  /* PRICING */
+  .pricing-section { background: var(--gray-1); }
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+  .pricing-card { background: var(--white); border: 1px solid var(--gray-2); border-radius: var(--radius-lg); padding: 26px 24px; position: relative; transition: box-shadow 0.2s, transform 0.2s; }
+  .pricing-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+  .pricing-card.featured { border-color: var(--red); border-width: 2px; }
+  .pricing-tag { position: absolute; top: -12px; left: 20px; background: var(--red); color: var(--white); font-size: 11px; font-weight: 700; letter-spacing: 0.8px; padding: 4px 12px; border-radius: 20px; }
+  .pricing-icon { width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--red-light); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .pricing-icon svg { width: 22px; height: 22px; color: var(--red); }
+  .pricing-name { font-size: 15px; font-weight: 700; color: var(--charcoal); margin-bottom: 6px; }
+  .pricing-desc { font-size: 13px; color: var(--gray-4); line-height: 1.5; margin-bottom: 20px; }
+  .pricing-price { font-size: 32px; font-weight: 800; color: var(--red); letter-spacing: -1px; }
+  .pricing-price sup { font-size: 16px; font-weight: 600; vertical-align: super; letter-spacing: 0; }
+  .pricing-note { font-size: 12px; color: var(--gray-4); margin-top: 4px; }
+  .pricing-footer { margin-top: 40px; padding: 22px 28px; background: var(--charcoal); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .pricing-footer p { color: #CCC; font-size: 14px; }
+  .pricing-footer strong { color: var(--white); }
+
+  /* HOW IT WORKS */
+  .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+  .steps-grid::before { content: ''; position: absolute; top: 28px; left: 12.5%; right: 12.5%; height: 2px; background: repeating-linear-gradient(90deg, var(--red) 0, var(--red) 8px, transparent 8px, transparent 16px); z-index: 0; }
+  .step { text-align: center; padding: 0 20px; position: relative; z-index: 1; }
+  .step-circle { width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: var(--white); }
+  .step:nth-child(odd) .step-circle { background: var(--red); }
+  .step:nth-child(even) .step-circle { background: var(--charcoal); }
+  .step-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--charcoal); }
+  .step-desc { font-size: 13px; color: var(--gray-4); line-height: 1.55; }
+
+  /* COMPLIANCE */
+  .compliance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .compliance-card { background: var(--white); border: 1px solid var(--gray-2); border-radius: var(--radius-lg); padding: 28px; display: flex; gap: 20px; align-items: flex-start; }
+  .compliance-icon-wrap { width: 52px; height: 52px; border-radius: var(--radius-md); background: var(--red-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .compliance-icon-wrap svg { width: 26px; height: 26px; color: var(--red); }
+  .compliance-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--charcoal); }
+  .compliance-card p { font-size: 14px; color: #666; line-height: 1.6; }
+
+  /* FORM */
+  .form-section { background: var(--gray-1); }
+  .form-wrap { background: var(--white); border: 1px solid var(--gray-2); border-radius: var(--radius-lg); padding: 44px 48px; box-shadow: var(--shadow-sm); }
+  .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+  label { font-size: 13px; font-weight: 600; color: var(--charcoal-2); }
+  input[type="text"], input[type="email"], input[type="tel"], textarea { font-family: var(--font); font-size: 14px; color: var(--charcoal); background: var(--white); border: 1.5px solid var(--gray-3); border-radius: var(--radius-sm); padding: 11px 14px; width: 100%; transition: border-color 0.15s; outline: none; }
+  input:focus, textarea:focus { border-color: var(--red); }
+  input::placeholder, textarea::placeholder { color: var(--gray-4); }
+  textarea { resize: vertical; min-height: 100px; }
+  .radio-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .radio-option { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--charcoal-2); cursor: pointer; padding: 8px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--gray-3); background: var(--white); transition: border-color 0.15s, background 0.15s; user-select: none; }
+  .radio-option input[type="radio"] { accent-color: var(--red); }
+  .radio-option:has(input:checked) { border-color: var(--red); background: var(--red-light); color: var(--red-dark); }
+  .form-submit-row { display: flex; justify-content: center; margin-top: 28px; }
+  .form-submit-row .btn-primary { font-size: 16px; padding: 16px 40px; }
+  .form-divider { height: 1px; background: var(--gray-2); margin: 24px 0; }
+  .form-section-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray-4); margin-bottom: 14px; margin-top: 6px; }
+  .form-success { display: none; text-align: center; padding: 40px 20px; }
+  .form-success .check-circle { width: 60px; height: 60px; border-radius: 50%; background: var(--red-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+  .form-success h3 { font-size: 22px; font-weight: 700; color: var(--charcoal); margin-bottom: 8px; }
+  .form-success p { font-size: 15px; color: #666; }
+
+  /* FOOTER */
+  footer { background: var(--charcoal); color: #AAA; padding: 48px 5% 32px; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; margin-bottom: 40px; flex-wrap: wrap; }
+  .footer-brand { max-width: 340px; }
+  .footer-brand-name { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+  .footer-brand-name span { color: var(--red-mid); }
+  .footer-brand p { font-size: 13px; line-height: 1.65; color: #888; }
+  .footer-links h4 { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #666; margin-bottom: 14px; }
+  .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-links a { font-size: 13px; color: #888; text-decoration: none; transition: color 0.15s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom { border-top: 1px solid #333; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; flex-wrap: wrap; gap: 8px; color: #555; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 60px 5% 50px; }
+    .hero-visual { display: none; }
+    .steps-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .steps-grid::before { display: none; }
+    .compliance-grid { grid-template-columns: 1fr; }
+    .form-grid-2 { grid-template-columns: 1fr; }
+    .form-wrap { padding: 28px 22px; }
+  }
+  @media (max-width: 640px) {
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    section { padding: 56px 4%; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .trust-bar { gap: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <a href="tel:7163354392">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 .01h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+    (716) 335-4392
+  </a>
+  <div class="top-bar-divider"></div>
+  <a href="mailto:info@capillarynetwork.com">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    info@capillarynetwork.com
+  </a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2a5 5 0 00-5 5c0 3 5 11 5 11s5-8 5-11a5 5 0 00-5-5z"/><circle cx="12" cy="7" r="2"/>
+      </svg>
+    </div>
+    <div class="nav-logo-text">Capillary <span>Network</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#compliance">Standards</a></li>
+    <li><a href="#inquiry">Facilities</a></li>
+    <li><a href="#inquiry" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">Mobile Phlebotomy</div>
+      <h1>Clinical Precision.<br><em>At Your Door.</em></h1>
+      <p class="hero-sub">Skip the waiting room. We dispatch certified, insured phlebotomists to your home, office, or care facility — on your schedule.</p>
+      <div class="hero-actions">
+        <a href="#inquiry" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Schedule Appointment
+        </a>
+        <a href="#inquiry" class="btn-secondary">Facility Inquiries</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-label">Service Overview</div>
+        <div class="hero-stat-row">
+          <div class="hero-stat"><span class="num">$65</span><span class="lbl">Starting price</span></div>
+          <div class="hero-stat"><span class="num">24h</span><span class="lbl">Response time</span></div>
+          <div class="hero-stat"><span class="num">4</span><span class="lbl">Service types</span></div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-label">Certifications &amp; Compliance</div>
+        <div class="badge-row">
+          <span class="badge badge-red">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            HIPAA Compliant
+          </span>
+          <span class="badge badge-red">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            CLIA Standards
+          </span>
+          <span class="badge badge-gray">Certified Phlebotomists</span>
+          <span class="badge badge-gray">Fully Insured</span>
+          <span class="badge badge-gray">Same-Day Stat</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    HIPAA &amp; CLIA Compliant
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+    Same-Day Stat Draws
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+    Pediatric &amp; Geriatric Care
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+    Home, Office &amp; Facility Visits
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+    B2B Group Rates Available
+  </div>
+</div>
+
+<!-- SERVICES / PRICING -->
+<section id="services" class="pricing-section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Transparent Pricing</div>
+    <h2 class="section-title">Simple, All-Inclusive Service Rates</h2>
+    <p class="section-sub">Every service includes a certified phlebotomist traveling directly to your location with all sterile equipment.</p>
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <div class="pricing-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/></svg>
+        </div>
+        <div class="pricing-name">Routine Blood Draw</div>
+        <div class="pricing-desc">Standard physician-ordered lab draws performed with precision and care.</div>
+        <div class="pricing-price"><sup>$</sup>65</div>
+        <div class="pricing-note">Per visit</div>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="pricing-tag">Most Requested</div>
+        <div class="pricing-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v11M9 14H5a2 2 0 00-2 2v4a2 2 0 002 2h4m0-6h10a2 2 0 012 2v4a2 2 0 01-2 2H9m0-6v6"/></svg>
+        </div>
+        <div class="pricing-name">Specialty Kit Collection</div>
+        <div class="pricing-desc">Complex or multi-vial specialty kits, including functional medicine panels.</div>
+        <div class="pricing-price"><sup>$</sup>85</div>
+        <div class="pricing-note">Per visit</div>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="pricing-name">Stat / Urgent Draw</div>
+        <div class="pricing-desc">Priority, same-day scheduling for urgent clinical needs requiring immediate attention.</div>
+        <div class="pricing-price"><sup>$</sup>110</div>
+        <div class="pricing-note">Per visit — same day</div>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <div class="pricing-name">Pediatric / Geriatric Draw</div>
+        <div class="pricing-desc">Gentle, compassionate care for children and elderly patients requiring extra time.</div>
+        <div class="pricing-price"><sup>$</sup>75</div>
+        <div class="pricing-note">Per visit</div>
+      </div>
+
+    </div>
+    <div class="pricing-footer">
+      <p><strong>Group &amp; Facility Rates Available</strong><br>Custom B2B pricing for long-term care and assisted living facilities.</p>
+      <a href="#inquiry" class="btn-primary">Get a Custom Quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="section-inner">
+    <div class="section-eyebrow">The Process</div>
+    <h2 class="section-title">From Booking to the Lab in 4 Steps</h2>
+    <p class="section-sub">We've removed every friction point from the traditional blood draw experience.</p>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-circle">1</div>
+        <div class="step-title">Book Your Slot</div>
+        <div class="step-desc">Schedule online or submit an inquiry. Provide your physician's lab order and preferred location.</div>
+      </div>
+      <div class="step">
+        <div class="step-circle">2</div>
+        <div class="step-title">We're Dispatched</div>
+        <div class="step-desc">A certified, insured phlebotomist arrives with all sterile equipment — no prep needed on your end.</div>
+      </div>
+      <div class="step">
+        <div class="step-circle">3</div>
+        <div class="step-title">Expert Collection</div>
+        <div class="step-desc">A quick, professional blood draw performed in the comfort of your chosen location.</div>
+      </div>
+      <div class="step">
+        <div class="step-circle">4</div>
+        <div class="step-title">Secure Lab Delivery</div>
+        <div class="step-desc">Specimens are processed, preserved, and securely transported to your designated lab immediately.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section id="compliance" style="background: var(--gray-1);">
+  <div class="section-inner">
+    <div class="section-eyebrow">Clinical Standards</div>
+    <h2 class="section-title">Uncompromising Compliance &amp; Security</h2>
+    <p class="section-sub">Your health data and specimen integrity are treated with the same rigor as a hospital lab — delivered to your door.</p>
+    <div class="compliance-grid">
+      <div class="compliance-card">
+        <div class="compliance-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h3>HIPAA Privacy Standards</h3>
+          <p>All patient health information is handled under strict HIPAA regulations. Your personal data is never shared, stored unsecurely, or accessed beyond clinical necessity.</p>
+        </div>
+      </div>
+      <div class="compliance-card">
+        <div class="compliance-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+        </div>
+        <div>
+          <h3>CLIA-Aligned Protocols</h3>
+          <p>Specimen collection, labeling, and transport follow CLIA-aligned standards — ensuring accuracy and integrity from draw to processing lab.</p>
+        </div>
+      </div>
+      <div class="compliance-card">
+        <div class="compliance-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+        </div>
+        <div>
+          <h3>Certified &amp; Insured Phlebotomists</h3>
+          <p>Every technician is nationally certified and carries professional liability insurance. Credentials are verified and maintained continuously.</p>
+        </div>
+      </div>
+      <div class="compliance-card">
+        <div class="compliance-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div>
+          <h3>Chain of Custody Integrity</h3>
+          <p>From collection through transport, every specimen is tracked and preserved — cold chain protocols maintained for temperature-sensitive panels.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INQUIRY FORM -->
+<section id="inquiry" class="form-section">
+  <div class="section-inner">
+    <div style="max-width: 760px; margin: 0 auto;">
+      <div class="section-eyebrow">Business Inquiry</div>
+      <h2 class="section-title">Get a Custom Quote</h2>
+      <p class="section-sub">Healthcare facility, care home, or corporate wellness program? Our team will respond within 24 hours.</p>
+      <div class="form-wrap">
+        <div id="form-body">
+          <div class="form-section-label">Contact Information</div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="f-name">Full Name / Facility Contact *</label>
+              <input type="text" id="f-name" placeholder="Jane Smith" />
+            </div>
+            <div class="form-group">
+              <label for="f-biz">Business / Facility Name</label>
+              <input type="text" id="f-biz" placeholder="Sunrise Senior Living (optional)" />
+            </div>
+            <div class="form-group">
+              <label for="f-email">Email Address *</label>
+              <input type="email" id="f-email" placeholder="jane@example.com" />
+            </div>
+            <div class="form-group">
+              <label for="f-phone">Phone Number *</label>
+              <input type="tel" id="f-phone" placeholder="(555) 000-0000" />
+            </div>
+          </div>
+          <div class="form-divider"></div>
+          <div class="form-section-label">Service Details</div>
+          <div class="form-group">
+            <label>Service Needed</label>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="service" value="routine" /> Individual Routine Draw</label>
+              <label class="radio-option"><input type="radio" name="service" value="specialty" /> Specialty Kit</label>
+              <label class="radio-option"><input type="radio" name="service" value="b2b" /> Assisted Living / B2B Contract</label>
+              <label class="radio-option"><input type="radio" name="service" value="corporate" /> Corporate Wellness</label>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top: 18px;">
+            <label>Estimated Frequency / Volume</label>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="frequency" value="once" /> One-time</label>
+              <label class="radio-option"><input type="radio" name="frequency" value="weekly" /> Weekly</label>
+              <label class="radio-option"><input type="radio" name="frequency" value="monthly" /> Monthly</label>
+              <label class="radio-option"><input type="radio" name="frequency" value="ongoing" /> Ongoing Partnership</label>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top: 18px;">
+            <label for="f-message">Message / Special Instructions</label>
+            <textarea id="f-message" placeholder="Tell us about your facility, patient population, or any special requirements..."></textarea>
+          </div>
+          <div class="form-submit-row">
+            <button class="btn-primary" onclick="submitForm()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Submit Secure Inquiry
+            </button>
+          </div>
+          <p style="text-align: center; font-size: 12px; color: var(--gray-4); margin-top: 14px;">Protected under HIPAA privacy standards — your information is never sold or shared.</p>
+        </div>
+        <div class="form-success" id="form-success">
+          <div class="check-circle">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>Inquiry Received</h3>
+          <p>Thank you — a member of our team will reach out within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">Capillary <span>Network</span></div>
+        <p>Premium mobile phlebotomy services — clinical precision and patient comfort, delivered directly to your door. Serving individuals, facilities, and corporate clients.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Routine Blood Draw</a></li>
+          <li><a href="#services">Specialty Kit Collection</a></li>
+          <li><a href="#services">Stat / Urgent Draw</a></li>
+          <li><a href="#services">Pediatric &amp; Geriatric</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Contact Us</h4>
+        <ul>
+          <li><a href="tel:7163354392" style="display:flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 .01h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>(716) 335-4392</a></li>
+          <li><a href="mailto:info@capillarynetwork.com" style="display:flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>info@capillarynetwork.com</a></li>
+          <li><a href="#inquiry" style="display:flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Schedule Online</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#compliance">Our Standards</a></li>
+          <li><a href="#inquiry">Facility Inquiries</a></li>
+          <li><a href="#inquiry">Schedule Now</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Capillary Network. All rights reserved.</span>
+      <span>
+        <a href="tel:7163354392" style="color:#555;text-decoration:none;">(716) 335-4392</a>
+        &nbsp;&middot;&nbsp;
+        <a href="mailto:info@capillarynetwork.com" style="color:#555;text-decoration:none;">info@capillarynetwork.com</a>
+        &nbsp;&middot;&nbsp;
+        HIPAA Compliant &nbsp;&middot;&nbsp; CLIA-Aligned
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function submitForm() {
+  var name = document.getElementById('f-name').value.trim();
+  var email = document.getElementById('f-email').value.trim();
+  var phone = document.getElementById('f-phone').value.trim();
+  if (!name || !email || !phone) {
+    alert('Please fill in your name, email, and phone number to continue.');
+    return;
+  }
+  document.getElementById('form-body').style.display = 'none';
+  var s = document.getElementById('form-success');
+  s.style.display = 'block';
+}
+</script>
+</body>
+</html>
